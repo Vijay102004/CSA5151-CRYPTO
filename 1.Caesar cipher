@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+void encrypt(char *text, int k) {
+    for (int i = 0; i < strlen(text); i++) {
+        if (isalpha(text[i])) {
+            char offset = isupper(text[i]) ? 'A' : 'a';
+            text[i] = ((text[i] - offset + k) % 26) + offset;
+        }
+    }
+}
+int main() {
+    char text[100];
+    int k;
+    printf("Enter the text to be encrypted: ");
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = '\0'; 
+    do {
+        printf("Enter the shift value (1-25): ");
+        scanf("%d", &k);
+    } while (k < 1 || k > 25);
+    encrypt(text, k);
+    printf("Encrypted text: %s\n", text);
+    return 0;
+}
